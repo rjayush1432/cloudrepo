@@ -6,6 +6,11 @@ pool:
   name: 'Pool'  # Replace 'Pool' with your self-hosted agent pool name
 
 steps:
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: '3.12.4'  # Specify your Python version here (e.g., '3.9')
+    addToPath: true
+
 # Step 1: Install dependencies using pip
 - script: |
     python -m pip install -r requirements.txt
