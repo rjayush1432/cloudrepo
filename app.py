@@ -92,4 +92,5 @@ def portfolio():
     return render_template_string(html_content)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    # Run the app with the host set to '0.0.0.0' for external accessibility
+    app.run(debug=True, host='0.0.0.0', port=5000)
