@@ -10,7 +10,7 @@ steps:
 # Step 2: Run the Flask app
 - script: |
     dir
-    cd..
+    cd \
     python --version
     python app.py
   displayName: 'Run Flask app'
