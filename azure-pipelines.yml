@@ -7,15 +7,15 @@ pool:
 steps:
 
 # Step 1: Check if Python is installed, and install it if not
-- script: |
-    if not exist "C:\Python39" (
-      echo "Python not found. Installing..."
-      powershell -Command "Invoke-WebRequest -Uri https://www.python.org/ftp/python/3.9.0/python-3.9.0.exe -OutFile python_installer.exe"
-      Start-Process python_installer.exe -ArgumentList "/quiet InstallAllUsers=1 PrependPath=1" -Wait
+- powershell: |
+    if (-not (Test-Path "C:\Python39")) {
+      Write-Host "Python not found. Installing..."
+      Invoke-WebRequest -Uri https://www.python.org/ftp/python/3.9.0/python-3.9.0.exe -OutFile python_installer.exe
+      Start-Process python_installer.exe -ArgumentList '/quiet', 'InstallAllUsers=1', 'PrependPath=1' -Wait
       Remove-Item python_installer.exe
-    ) else (
-      echo "Python is already installed."
-    )
+    } else {
+      Write-Host "Python is already installed."
+    }
   displayName: 'Install Python if not present'
 
 # Step 2: Install dependencies using pip
