@@ -10,10 +10,14 @@ variables:
 
 steps:
 # Step 1: Check out the code
+- task: Checkout@1
+  displayName: 'Checkout code'
+
 # Step 2: Set up Python
 - task: UsePythonVersion@0
   inputs:
     versionSpec: $(pythonVersion)
+    addToPath: true  # Adds Python to PATH
   displayName: 'Set up Python'
 
 # Step 3: Install dependencies
