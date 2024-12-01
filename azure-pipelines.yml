@@ -6,25 +6,13 @@ pool:
 
 steps:
 
-# Step 1: Check if Python is installed, and install it if not
-- powershell: |
-    if (-not (Test-Path "C:\Python39")) {
-      Write-Host "Python not found. Installing..."
-      Invoke-WebRequest -Uri https://www.python.org/ftp/python/3.9.0/python-3.9.0.exe -OutFile python_installer.exe
-      Start-Process python_installer.exe -ArgumentList '/quiet', 'InstallAllUsers=1', 'PrependPath=1' -Wait
-      Remove-Item python_installer.exe
-    } else {
-      Write-Host "Python is already installed."
-    }
-  displayName: 'Install Python if not present'
-
-# Step 2: Install dependencies using pip
+# Step 1: Install dependencies using pip
 - script: |
     python -m pip install --upgrade pip
     pip install -r requirements.txt
   displayName: 'Install dependencies'
 
-# Step 3: Run the Flask app
+# Step 2: Run the Flask app
 - script: |
     python app.py
   displayName: 'Run Flask app'
