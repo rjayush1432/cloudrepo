@@ -4,7 +4,6 @@ app = Flask(__name__)
 
 @app.route("/")
 def portfolio():
-    # Define the project data
     context = {
         "projects": [
             {"name": "Project 1", "description": "Description of Project 1", "image": "https://via.placeholder.com/300"},
@@ -12,8 +11,9 @@ def portfolio():
             {"name": "Project 3", "description": "Description of Project 3", "image": "https://via.placeholder.com/300"}
         ]
     }
-    
-    # Template with safe handling of missing keys using .get()
+
+    print("Context being passed:", context)  # Debugging line
+
     html_content = """
     <!DOCTYPE html>
     <html lang="en">
@@ -92,9 +92,7 @@ def portfolio():
     </html>
     """
     
-    # Render the template with context
     return render_template_string(html_content, **context)
 
 if __name__ == "__main__":
-    # Run the app with the host set to '0.0.0.0' for external accessibility
     app.run(debug=True, host='0.0.0.0', port=5000)
