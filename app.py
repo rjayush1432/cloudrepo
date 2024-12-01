@@ -4,6 +4,16 @@ app = Flask(__name__)
 
 @app.route("/")
 def portfolio():
+    # Define the project data
+    context = {
+        "projects": [
+            {"name": "Project 1", "description": "Description of Project 1", "image": "https://via.placeholder.com/300"},
+            {"name": "Project 2", "description": "Description of Project 2", "image": "https://via.placeholder.com/300"},
+            {"name": "Project 3", "description": "Description of Project 3", "image": "https://via.placeholder.com/300"}
+        ]
+    }
+    
+    # Template with safe handling of missing keys using .get()
     html_content = """
     <!DOCTYPE html>
     <html lang="en">
@@ -66,21 +76,13 @@ def portfolio():
         <section>
             <h2>Projects</h2>
             <div class="projects">
-                <div class="project">
-                    <img src="https://via.placeholder.com/300" alt="Project 1">
-                    <h3>Project 1</h3>
-                    <p>Description of Project 1.</p>
-                </div>
-                <div class="project">
-                    <img src="https://via.placeholder.com/300" alt="Project 2">
-                    <h3>Project 2</h3>
-                    <p>Description of Project 2.</p>
-                </div>
-                <div class="project">
-                    <img src="https://via.placeholder.com/300" alt="Project 3">
-                    <h3>Project 3</h3>
-                    <p>Description of Project 3.</p>
-                </div>
+                {% for project in projects %}
+                    <div class="project">
+                        <img src="{{ project.get('image', 'https://via.placeholder.com/300') }}" alt="{{ project.get('name', 'Project') }}">
+                        <h3>{{ project.get('name', 'Untitled Project') }}</h3>
+                        <p>{{ project.get('description', 'No description available.') }}</p>
+                    </div>
+                {% endfor %}
             </div>
         </section>
         <footer>
@@ -89,7 +91,9 @@ def portfolio():
     </body>
     </html>
     """
-    return render_template_string(html_content)
+    
+    # Render the template with context
+    return render_template_string(html_content, **context)
 
 if __name__ == "__main__":
     # Run the app with the host set to '0.0.0.0' for external accessibility
