@@ -2,15 +2,13 @@ trigger:
 - main
 
 pool:
-  name: 'AzureVM'  # Replace 'AzureVM' with your self-hosted agent pool name
+  name: 'apname'  # Replace 'AzureVM' with your self-hosted agent pool name
 
 steps:
 
 # Step 1: Install dependencies using pip
 # Step 2: Run the Flask app
 - script: |
-    dir
-    cd \
     python --version
     python app.py
   displayName: 'Run Flask app'
