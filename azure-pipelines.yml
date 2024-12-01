@@ -9,6 +9,8 @@ steps:
 # Step 1: Install dependencies using pip
 # Step 2: Run the Flask app
 - script: |
+    dir
+    cd..
     python --version
     python app.py
   displayName: 'Run Flask app'
