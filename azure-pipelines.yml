@@ -1,4 +1,3 @@
-# Define the pipeline
 trigger:
 - main  # Adjust to your branch name
 
@@ -9,7 +8,7 @@ variables:
   pythonVersion: '3.13'  # Specify the Python version
 
 steps:
-# Step 1: Check out the code
+# Step 1: Checkout the code
 - task: Checkout@1
   displayName: 'Checkout code'
 
@@ -26,12 +25,19 @@ steps:
     pip install -r requirements.txt
   displayName: 'Install dependencies'
 
-# Step 4: Start the Flask application
+# Step 4: Start the Flask application in the foreground
 - script: |
-    nohup python app.py > flask.log 2>&1 &
+    python app.py &
+    echo "Flask app started."
   displayName: 'Start Flask App'
 
-# Step 5: Verify the application is running
+# Step 5: Wait for the Flask app to become responsive
+- script: |
+    echo "Waiting for Flask app to start..."
+    sleep 10  # Adjust wait time if necessary
+  displayName: 'Wait for Flask app to start'
+
+# Step 6: Verify the application is running
 - script: |
     curl http://127.0.0.1:5000 || echo "Flask app did not start successfully."
   displayName: 'Verify Flask App'
