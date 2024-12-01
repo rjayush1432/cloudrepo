@@ -5,10 +5,6 @@ pool:
   name: 'AzureVM'  # Replace 'Default' with your self-hosted agent pool name
 
 steps:
-- task: UsePythonVersion@0
-  inputs:
-    versionSpec: '3.11.9'
-    addToPath: true
 
 - script: |
     python -m pip install --upgrade pip
