@@ -7,7 +7,7 @@ pool:
 steps:
 - task: UsePythonVersion@0
   inputs:
-    versionSpec: '3.13'
+    versionSpec: '3.11'
     addToPath: true
 
 - script: |
