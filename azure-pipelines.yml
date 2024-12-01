@@ -1,0 +1,33 @@
+# Define the pipeline
+trigger:
+- main  # Adjust to your branch name
+
+pool:
+  name: AzureVM  # Replace with your self-hosted agent pool name
+
+variables:
+  pythonVersion: '3.12'  # Specify the Python version
+
+steps:
+# Step 1: Check out the code
+# Step 2: Set up Python
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: $(pythonVersion)
+  displayName: 'Set up Python'
+
+# Step 3: Install dependencies
+- script: |
+    python -m pip install --upgrade pip
+    pip install -r requirements.txt
+  displayName: 'Install dependencies'
+
+# Step 4: Start the Flask application
+- script: |
+    nohup python app.py > flask.log 2>&1 &
+  displayName: 'Start Flask App'
+
+# Step 5: Verify the application is running
+- script: |
+    curl http://127.0.0.1:5000 || echo "Flask app did not start successfully."
+  displayName: 'Verify Flask App'
